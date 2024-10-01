@@ -1,6 +1,7 @@
-import { Component, EventEmitter, output, Output, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { InvestmentInput } from '../investment.model';
+import { InvestmentService } from '../investment.service';
 
 @Component({
   selector: 'app-user-input',
@@ -16,10 +17,10 @@ export class UserInputComponent {
   expected_return = signal("5")
   duration = signal("10")
 
-  calculate = output<InvestmentInput>()
+  constructor(private investmentService: InvestmentService ) {}
 
   onSubmit() {
-    this.calculate.emit({
+    this.investmentService.CalculateInvestmentResults({
       initialInvestment: Number(this.initial_investment()),
       duration: Number(this.duration()),
       expectedReturn: Number(this.expected_return()),
